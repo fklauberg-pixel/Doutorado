@@ -1,0 +1,10 @@
+# rasters e vetores grandes ficam fora do git
+*.tif
+*.tiff
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+__pycache__/

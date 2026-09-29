@@ -1,0 +1,29 @@
+# Configuração do pipeline do paper 3 (LAI por drone vs CI-202).
+# Caminhos relativos a esta pasta (paper3-lai-drone/).
+
+ortomosaico: dados/ortomosaico_rgb.tif      # GeoTIFF RGB exportado do Pix4D
+parcelas: dados/parcelas.gpkg               # polígonos das 24 parcelas (ou .shp)
+campo_id_parcela: Parcela                   # nome da coluna com o número da parcela
+buffer_interno_m: 0.5                       # bordadura removida de cada lado (m)
+
+lai_campo: dados/lai_ci202.csv              # uma linha por parcela (ver modelo)
+pasta_resultados: resultados
+coluna_area_foliar: TLA_cm2_planta          # área foliar por planta medida no CI-202 (cm²)
+# Plantas por m². LAI = área foliar por planta (m²) x densidade.
+# Deixe null se ainda não souber: o pipeline usa a área foliar por planta,
+# o que não muda r nem R², só a escala do RMSE.
+densidade_plantas_m2: null
+
+mascara_solo: otsu_exg      # "otsu_exg" (só pixels de vegetação) ou "nenhuma"
+limiar_r_selecao: 0.7       # regra de Du et al. (2022) para MLR e RF
+
+validacao:
+  kfold: 5
+  repeticoes: 100           # repeated k-fold
+  splits_70_30: 500         # esquema de Du et al. (2022), para comparação
+  semente: 42
+
+random_forest:
+  n_estimators: 500
+  max_features: [0.33, 0.5, 0.75, 1.0]   # fração dos preditores (mtry)
+  min_samples_leaf: [1, 2, 3, 5]

@@ -1,0 +1,8 @@
+n = 24 parcelas
+Área foliar (cm² planta⁻¹): média 2964, DP 340, CV 11.5%, amplitude 2032-3744
+ExG (DN): média 53.1, amplitude 30.8-73.9
+r de Pearson = 0.414 (IC95% 0.013 a 0.701), p = 0.0441
+Ajuste: TLA = 2324.4 + 12.05 * ExG; R² = 0.172
+LOOCV:               R² = -0.044; RMSE = 340 cm²; rRMSE = 11.5%
+Deixa um bloco fora: R² = -0.220; RMSE = 367 cm²; rRMSE = 12.4%
+Spearman rho = 0.384, p = 0.0637
