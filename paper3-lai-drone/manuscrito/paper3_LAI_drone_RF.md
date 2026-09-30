@@ -45,13 +45,13 @@ O delineamento foi em blocos casualizados, em esquema fatorial 2 × 3, com quatr
 
 ### 2.2 LAI de referência com o CI-202
 
-A área foliar foi medida de forma não destrutiva com o medidor portátil a laser CI-202 (CID Bio-Science, Camas, WA, EUA). Em cada parcela, todas as folhas de cinco plantas foram medidas, e a área foliar da parcela é a média dessas cinco plantas. [PREENCHER: data da medição e dias após a semeadura; estádio fenológico; critério de escolha das plantas (ex.: aleatórias na área útil)]. O LAI de cada parcela foi calculado como
+A área foliar foi medida de forma não destrutiva com o medidor portátil a laser CI-202 (CID Bio-Science, Camas, WA, EUA). Em cada parcela, todas as folhas de cinco plantas foram medidas, e a área foliar da parcela é a média dessas cinco plantas. A medição foi feita em 12 de dezembro de 2022, no mesmo dia do voo, o que elimina a defasagem entre a verdade de campo e a imagem. [VERIFICAR: ano da medição; o Filipe escreveu 12/12/2023, mas o voo e o processamento do Pix4D são de 12/12/2022]. [PREENCHER: dias após a semeadura; estádio fenológico; critério de escolha das plantas (ex.: aleatórias na área útil)]. O LAI de cada parcela foi calculado como
 
 LAI = AF × D / 10 000,
 
 em que AF é a área foliar média por planta (cm² planta⁻¹) e D é a densidade de plantas (plantas m⁻²), seguindo Du et al. (2022).
 
-[VERIFICAR: o CI-202 mede folha a folha, então a área foliar por planta soma todas as folhas verdes medidas; confirmar o protocolo usado e o intervalo, em dias, entre a medição e o voo.]
+
 
 ### 2.3 Aquisição e processamento das imagens
 
