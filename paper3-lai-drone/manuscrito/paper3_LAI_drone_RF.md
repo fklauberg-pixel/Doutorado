@@ -41,11 +41,11 @@ O índice de área foliar (LAI) governa a interceptação de radiação, a trans
 
 O experimento foi conduzido na Estação Experimental de Fruticultura Tropical do Instituto Nacional de Pesquisas da Amazônia (INPA), km 41 da rodovia AM-010, Manaus, Amazonas (2°37′11,8″ S; 60°02′28,8″ W). [PREENCHER: tipo de solo (Latossolo Amarelo / Ferralsol), clima (Köppen), precipitação e temperatura médias do período].
 
-O delineamento foi em blocos casualizados, em esquema fatorial 2 × 3, com quatro repetições: duas doses de biochar de resíduo de açaí (*Euterpe oleracea* Mart.) — 0 (BC0) e 12 t ha⁻¹ (BC12) — e três doses de calcário dolomítico — 0, 75 e 100% da dose recomendada (L0, L75, L100), totalizando 24 parcelas de 3 × 4 m (12 m²). [PREENCHER: híbrido/cultivar de milho, data de semeadura, espaçamento entre linhas e entre plantas, densidade de plantas (plantas m⁻²), adubação de base e cobertura]. O efeito dos tratamentos não é o objeto deste artigo: aqui eles servem para gerar variação de LAI entre parcelas.
+O delineamento foi em blocos casualizados, em esquema fatorial 2 × 3, com quatro repetições: duas doses de biochar de resíduo de açaí (*Euterpe oleracea* Mart.) — 0 (BC0) e 12 t ha⁻¹ (BC12) — e três doses de calcário dolomítico — 0, 75 e 100% da dose recomendada (L0, L75, L100), totalizando 24 parcelas de 3 × 4 m (12 m²). O milho foi semeado no espaçamento de 0,80 m entre linhas e 0,25 m entre covas, com duas plantas por cova, o que resulta em 10 plantas m⁻². [PREENCHER: híbrido/cultivar, data de semeadura, adubação de base e cobertura]. O efeito dos tratamentos não é o objeto deste artigo: aqui eles servem para gerar variação de LAI entre parcelas.
 
 ### 2.2 LAI de referência com o CI-202
 
-A área foliar foi medida de forma não destrutiva com o medidor portátil a laser CI-202 (CID Bio-Science, Camas, WA, EUA). [PREENCHER: data da medição e dias após a semeadura; estádio fenológico; número de plantas medidas por parcela; critério de escolha das plantas (ex.: aleatórias na área útil); se todas as folhas verdes foram medidas]. O LAI de cada parcela foi calculado como
+A área foliar foi medida de forma não destrutiva com o medidor portátil a laser CI-202 (CID Bio-Science, Camas, WA, EUA). Em cada parcela, todas as folhas de cinco plantas foram medidas, e a área foliar da parcela é a média dessas cinco plantas. [PREENCHER: data da medição e dias após a semeadura; estádio fenológico; critério de escolha das plantas (ex.: aleatórias na área útil)]. O LAI de cada parcela foi calculado como
 
 LAI = AF × D / 10 000,
 
@@ -55,7 +55,7 @@ em que AF é a área foliar média por planta (cm² planta⁻¹) e D é a densid
 
 ### 2.3 Aquisição e processamento das imagens
 
-As imagens foram obtidas com um VANT DJI Mini 2 (DJI, Shenzhen, China), câmera FC7303 com sensor CMOS de 1/2,3″ e resolução de 4000 × 2250 pixels, em 12 de dezembro de 2022 [VERIFICAR: data; o artigo 2 cita voo em 17/12/2022 com GSD de 1,7 cm]. [PREENCHER: altura de voo, horário, condição de céu, sobreposições frontal e lateral, modo de exposição/ISO, número de imagens]. As imagens foram processadas no Pix4D Mapper [PREENCHER: versão] para gerar o ortomosaico RGB, com GSD médio de 0,84 cm, segundo o relatório de processamento do Pix4D. [PREENCHER: uso ou não de pontos de controle; sistema de referência final]. [VERIFICAR: o relatório de processamento inicial disponível indica 11 de 25 imagens calibradas (44%); confirmar se houve reprocessamento com todas as imagens antes de extrair os índices.]
+As imagens foram obtidas com um VANT DJI Mini 2 (DJI, Shenzhen, China), câmera FC7303 com sensor CMOS de 1/2,3″ e resolução de 4000 × 2250 pixels, em 12 de dezembro de 2022, o voo mais próximo da medição da área foliar. [VERIFICAR: o artigo 2 descreve outro voo, de 17/12/2022, com GSD de 1,7 cm; alinhar os dois textos para não parecer contradição entre os artigos]. [PREENCHER: altura de voo, horário, condição de céu, sobreposições frontal e lateral, modo de exposição/ISO, número de imagens]. As imagens foram processadas no Pix4D Mapper [PREENCHER: versão] para gerar o ortomosaico RGB, com GSD médio de 0,84 cm, segundo o relatório de processamento do Pix4D. [PREENCHER: uso ou não de pontos de controle; sistema de referência final]. [VERIFICAR: o relatório de processamento inicial disponível indica 11 de 25 imagens calibradas (44%); confirmar se houve reprocessamento com todas as imagens antes de extrair os índices.]
 
 ### 2.4 Extração dos índices de vegetação
 

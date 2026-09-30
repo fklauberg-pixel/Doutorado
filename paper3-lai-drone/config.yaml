@@ -12,7 +12,7 @@ coluna_area_foliar: TLA_cm2_planta          # área foliar por planta medida no 
 # Plantas por m². LAI = área foliar por planta (m²) x densidade.
 # Deixe null se ainda não souber: o pipeline usa a área foliar por planta,
 # o que não muda r nem R², só a escala do RMSE.
-densidade_plantas_m2: null
+densidade_plantas_m2: 10     # 0,80 x 0,25 m, 2 plantas por cova (informado pelo Filipe)
 
 mascara_solo: otsu_exg      # "otsu_exg" (só pixels de vegetação) ou "nenhuma"
 limiar_r_selecao: 0.7       # regra de Du et al. (2022) para MLR e RF
