@@ -1,0 +1,8 @@
+n = 24 parcelas; densidade = 10 plantas m-2
+LAI: média 2.964, DP 0.340, CV 11.5%, mín 2.032, máx 3.744
+ExG: média 53.06, DP 11.68, mín 30.79, máx 73.88
+r de Pearson = 0.414 (IC95% 0.013 a 0.701), p = 0.0441
+Linear (todos os dados): LAI = 2.3244 + 0.01205 ExG; R2 = 0.172; p = 0.0441
+Quadrática (todos os dados): R2 = 0.279; p do termo ExG^2 = 0.0908
+ANOVA DBC, efeito de tratamento: LAI F = 4.14, p = 0.0146; ExG F = 13.99, p = 0.0000
+Médias dos 6 tratamentos: r = 0.647, p = 0.1648

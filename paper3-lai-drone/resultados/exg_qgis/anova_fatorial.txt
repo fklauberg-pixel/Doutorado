@@ -1,0 +1,34 @@
+LAI (m2 m-2)
+Analysis of Variance Table
+
+Response: LAI
+                 Df  Sum Sq Mean Sq F value   Pr(>F)   
+Bloco             3 0.58586 0.19529  3.3701 0.046676 * 
+Biochar           1 0.89712 0.89712 15.4819 0.001324 **
+Calcario          2 0.16522 0.08261  1.4256 0.271124   
+Biochar:Calcario  2 0.13732 0.06866  1.1849 0.332836   
+Residuals        15 0.86920 0.05795                    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+ExG (QGIS)
+Analysis of Variance Table
+
+Response: ExG_DN_QGIS
+                 Df  Sum Sq Mean Sq F value    Pr(>F)    
+Bloco             3  192.25   64.08  1.8483   0.18177    
+Biochar           1  251.81  251.81  7.2627   0.01663 *  
+Calcario          2 2065.07 1032.53 29.7800 5.983e-06 ***
+Biochar:Calcario  2  109.10   54.55  1.5733   0.23973    
+Residuals        15  520.08   34.67                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Medias por tratamento
+  Biochar Calcario   LAI ExG_DN_QGIS
+1     BC0       L0 2.553       34.10
+2    BC12       L0 3.149       46.21
+3     BC0     L100 2.872       58.79
+4    BC12     L100 3.115       64.32
+5     BC0      L75 2.887       56.58
+6    BC12      L75 3.208       58.38

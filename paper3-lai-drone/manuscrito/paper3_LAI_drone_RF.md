@@ -106,23 +106,38 @@ As análises foram feitas em Python [PREENCHER: versão] com scikit-learn, raste
 
 ## 3. Resultados
 
-### 3.1 Variação do LAI e dos índices
+> **Nota ao autor (remover antes da submissão):** as Seções 3.1–3.3 usam por enquanto só o ExG já extraído no QGIS (valores digitais 0–255, média por parcela), a pedido do autor. Saídas em `resultados/exg_qgis/`, geradas por `analise/R/lai_exg_qgis.R`. Quando os demais índices forem extraídos do ortomosaico, estas seções ganham as tabelas completas.
 
-[RESULTADO PENDENTE: média, desvio padrão, CV e amplitude do LAI (depende da densidade de plantas); estatísticas dos 13 índices — sai de `resultados/indices_por_parcela.csv`].
+### 3.1 Variação do LAI e do ExG
 
-> **Nota ao autor (remover antes da submissão):** com os dados já disponíveis (Livro2.xlsx), a área foliar por planta varia de 2032 a 3744 cm² planta⁻¹, com CV de 11,5%. É uma amplitude estreita para calibrar modelos; a Seção 4.3 discute esse ponto.
+O LAI medido com o CI-202 variou de 2,03 a 3,74 m² m⁻² (média 2,96; DP 0,34; CV 11,5%), e o ExG variou de 30,8 a 73,9 (média 53,1; DP 11,7). Os dois responderam aos tratamentos de forma diferente (ANOVA em blocos, esquema fatorial; `anova_fatorial.txt`). O LAI respondeu ao biochar (F = 15,48; p = 0,001), mas não ao calcário (F = 1,43; p = 0,27). O ExG respondeu principalmente ao calcário (F = 29,78; p < 0,001) e, em menor grau, ao biochar (F = 7,26; p = 0,017). O caso mais claro é o tratamento BC12L0: teve LAI médio de 3,15 m² m⁻², entre os maiores do experimento, mas ExG médio de 46,2, o segundo menor. Nenhuma interação biochar × calcário foi significativa para as duas variáveis (p ≥ 0,24).
 
-### 3.2 Correlação entre índices RGB e LAI
+### 3.2 Relação entre ExG e LAI
 
-[RESULTADO PENDENTE: Figura 1 (`fig_correlacoes.png`) e Tabela 2 (`tab_correlacoes.csv`) — r de Pearson com IC 95% de cada índice; quais índices passam de |r| = 0,7].
+O ExG correlacionou-se positivamente com o LAI (r = 0,41; IC 95% 0,01–0,70; p = 0,044; Figura 1, `fig_ExG_LAI.png`). A regressão linear ajustada com as 24 parcelas foi LAI = 2,324 + 0,0121·ExG (R² = 0,17). O termo quadrático não foi significativo (p = 0,091). Com as médias dos seis tratamentos, a correlação foi r = 0,65 (p = 0,16; n = 6).
 
 ### 3.3 Desempenho dos modelos
 
-[RESULTADO PENDENTE: Tabela 3 (`tab_desempenho_modelos.csv`) — R², RMSE, rRMSE, MAE e viés, média ± DP, para os cinco modelos nos quatro esquemas de validação].
+Em validação cruzada, nenhum modelo baseado no ExG estimou o LAI melhor do que a média do conjunto de treino (Tabela 3, `tab_desempenho.csv`). Na validação principal, deixando um bloco inteiro de fora, o R² de validação foi −0,22 para a regressão linear, −0,15 para a quadrática, −0,25 para a exponencial e −0,30 para o Random Forest. O modelo nulo teve R² de −0,17, e os RMSE ficaram todos entre 0,36 e 0,38 m² m⁻² (rRMSE de 12,0% a 12,8%). No LOOCV e no 5-fold repetido 100 vezes, as regressões linear e quadrática ficaram marginalmente acima do nulo: RMSE de 0,334–0,344 contra 0,347–0,349 m² m⁻², com R² entre −0,07 e −0,01. O Random Forest foi o pior modelo em todos os esquemas: RMSE de 0,358 no LOOCV e 0,367 no 5-fold, e nas 500 partições 70/30 superou o modelo nulo em só 38% das partições, contra 58% da regressão linear (Figura 2, `fig_obs_pred_bloco.png`; Figura 3, `fig_boxplot_R2_7030.png`).
 
-[RESULTADO PENDENTE: Figura 2 (`fig_observado_vs_estimado_LOOCV.png`) — LAI observado vs estimado; Figura 3 (`fig_RMSE_kfold.png`) — distribuição do RMSE nas 100 repetições].
+**Tabela 3.** Desempenho de validação na estimativa do LAI (m² m⁻²) a partir do ExG.
 
-[RESULTADO PENDENTE: comparação RF vs linear (`tab_comparacao_RF_vs_linear.csv`) — diferença média de RMSE, % das repetições em que o RF foi melhor, t e p corrigidos].
+| Esquema | Modelo | R² | RMSE | rRMSE (%) |
+|---|---|---|---|---|
+| Deixa um bloco fora | Nulo | −0,17 | 0,360 | 12,1 |
+| | Linear | −0,22 | 0,367 | 12,4 |
+| | Quadrática | −0,15 | 0,357 | 12,0 |
+| | Random Forest | −0,30 | 0,380 | 12,8 |
+| LOOCV | Nulo | −0,09 | 0,347 | 11,7 |
+| | Linear | −0,04 | 0,340 | 11,5 |
+| | Quadrática | −0,01 | 0,334 | 11,3 |
+| | Random Forest | −0,16 | 0,358 | 12,1 |
+| 5-fold × 100 | Nulo | −0,10 | 0,349 | 11,8 |
+| | Linear | −0,07 | 0,344 | 11,6 |
+| | Quadrática | −0,05 | 0,341 | 11,5 |
+| | Random Forest | −0,22 | 0,367 | 12,4 |
+
+O ExG e o LAI correlacionaram-se com o rendimento de grãos com intensidade semelhante: r = 0,53 (p = 0,008) e r = 0,55 (p = 0,006), respectivamente (`rendimento.txt`).
 
 ### 3.4 Importância dos índices
 
@@ -139,6 +154,9 @@ As análises foram feitas em Python [PREENCHER: versão] com scikit-learn, raste
 > Estrutura proposta; o conteúdo de cada parágrafo depende dos resultados.
 
 ### 4.1 Quais índices RGB carregam informação sobre o LAI
+
+**Resultado com o ExG (a desenvolver):** o ExG mede sobretudo o verdor do dossel, e o verdor respondeu ao calcário, enquanto a área foliar respondeu ao biochar (Seção 3.1). Uma hipótese é que o calcário dolomítico, ao fornecer Ca e Mg e corrigir a acidez, aumentou o teor de clorofila e a cor verde das folhas sem aumentar na mesma proporção a área foliar [CITAÇÃO NECESSÁRIA: Mg, calagem e clorofila em milho; conferir com os teores foliares de Mg e o SPAD do próprio experimento]. Se essa hipótese se confirmar, a cor e a quantidade de folhas se desacoplam quando os tratamentos alteram a nutrição, e índices de verdor não servem como substitutos diretos do LAI nessas condições. Isso também explica por que o ExG prevê o rendimento tão bem quanto o LAI: o rendimento depende das duas coisas.
+
 
 [RESULTADO PENDENTE]. Pontos a discutir: se os índices de razão verde-vermelho (NGRDI, MGRVI, VARI) se destacam, como no estádio de enchimento de grãos em Du et al. (2022) [VERIFICAR]; o papel da cobertura do dossel (CC) versus a cor das folhas; e se a média de todos os pixels (que mistura solo e planta) supera a média só da vegetação, o que indicaria que a fração de cobertura, e não a cor, conduz a relação.
 
