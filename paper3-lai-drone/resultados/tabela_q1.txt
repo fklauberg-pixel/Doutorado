@@ -1,0 +1,110 @@
+
+===== Versão A =====
+LAI média 2.91, CV 13.6%
+LAI    F_BC=33.1 p=0.0000 | F_L=6.7 p=0.0081 | F_int=6.18 p=0.011 | CVexp=7.2%
+       médias BC0: [2.23, 2.89, 2.87]  BC12: [3.15, 3.21, 3.11]
+SPAD   F_BC=9.0 p=0.0089 | F_L=4.7 p=0.0267 | F_int=0.18 p=0.840 | CVexp=6.8%
+       médias BC0: [30.06, 31.86, 32.75]  BC12: [32.08, 34.71, 36.08]
+ExG    F_BC=7.3 p=0.0166 | F_L=29.8 p=0.0000 | F_int=1.57 p=0.240 | CVexp=11.1%
+       médias BC0: [34.1, 56.58, 58.79]  BC12: [46.21, 58.38, 64.32]
+CCC    F_BC=49.7 p=0.0000 | F_L=13.2 p=0.0005 | F_int=2.35 p=0.129 | CVexp=8.6%
+       médias BC0: [66.8, 91.78, 94.17]  BC12: [101.11, 110.87, 112.51]
+GY     F_BC=149.4 p=0.0000 | F_L=10.7 p=0.0013 | F_int=3.34 p=0.063 | CVexp=9.9%
+       médias BC0: [2882.75, 2990.44, 3379.46]  BC12: [4303.73, 5360.89, 5661.93]
+AGBce  F_BC=33.1 p=0.0000 | F_L=13.7 p=0.0004 | F_int=0.99 p=0.395 | CVexp=13.1%
+       médias BC0: [34.67, 52.1, 56.53]  BC12: [55.87, 71.67, 68.0]
+H      F_BC=13.5 p=0.0023 | F_L=27.0 p=0.0000 | F_int=1.46 p=0.263 | CVexp=6.8%
+       médias BC0: [125.72, 163.39, 169.21]  BC12: [149.92, 182.18, 175.26]
+Correlações de Pearson (n=24):
+        LAI  SPAD   ExG   CCC    GY  AGBce     H
+LAI    1.00  0.36  0.58  0.88  0.61   0.79  0.70
+SPAD   0.36  1.00  0.43  0.75  0.59   0.60  0.48
+ExG    0.58  0.43  1.00  0.62  0.53   0.63  0.76
+CCC    0.88  0.75  0.62  1.00  0.73   0.85  0.73
+GY     0.61  0.59  0.53  0.73  1.00   0.68  0.56
+AGBce  0.79  0.60  0.63  0.85  0.68   1.00  0.85
+H      0.70  0.48  0.76  0.73  0.56   0.85  1.00
+ExG ~ SPAD + LAI (padronizado): beta_SPAD=0.26 (p=0.171), beta_LAI=0.49 (p=0.015), R2=0.39
+   com bloco: p_SPAD=0.490, p_LAI=0.018, R2=0.42
+ExG ~ LAI: R2=0.334, AIC=179.3
+ExG ~ SPAD: R2=0.187, AIC=184.1
+ExG ~ CCC: R2=0.387, AIC=177.3
+médias de tratamento r(ExG,LAI)=0.75 p=0.088
+médias de tratamento r(ExG,SPAD)=0.85 p=0.034
+médias de tratamento r(ExG,CCC)=0.82 p=0.043
+médias de tratamento r(GY,LAI)=0.74 p=0.090
+médias de tratamento r(GY,SPAD)=0.91 p=0.013
+médias de tratamento r(GY,ExG)=0.57 p=0.238
+médias de tratamento r(GY,CCC)=0.86 p=0.027
+GY~LAI: R2=0.37, AIC=399.7, p=0.0017
+GY~SPAD: R2=0.35, AIC=400.5, p=0.0025
+GY~ExG: R2=0.28, AIC=402.7, p=0.0077
+GY~CCC: R2=0.54, AIC=392.2, p=0.0000
+GY~LAI+SPAD: R2=0.52, AIC=394.8, p=0.0004
+SPAD: inclinação por % de dose de calcário = 0.0325 (p=0.0042)
+ExG: inclinação por % de dose de calcário = 0.2179 (p=0.0000)
+LAI: inclinação por % de dose de calcário = 0.0035 (p=0.0155)
+
+===== Versão B =====
+LAI média 2.96, CV 11.5%
+LAI    F_BC=15.5 p=0.0013 | F_L=1.4 p=0.2711 | F_int=1.18 p=0.333 | CVexp=8.1%
+       médias BC0: [2.55, 2.89, 2.87]  BC12: [3.15, 3.21, 3.11]
+SPAD   F_BC=9.0 p=0.0089 | F_L=4.7 p=0.0267 | F_int=0.18 p=0.840 | CVexp=6.8%
+       médias BC0: [30.06, 31.86, 32.75]  BC12: [32.08, 34.71, 36.08]
+ExG    F_BC=7.3 p=0.0166 | F_L=29.8 p=0.0000 | F_int=1.57 p=0.240 | CVexp=11.1%
+       médias BC0: [34.1, 56.58, 58.79]  BC12: [46.21, 58.38, 64.32]
+CCC    F_BC=34.0 p=0.0000 | F_L=6.6 p=0.0088 | F_int=0.32 p=0.730 | CVexp=8.9%
+       médias BC0: [76.4, 91.78, 94.17]  BC12: [101.11, 110.87, 112.51]
+GY     F_BC=149.4 p=0.0000 | F_L=10.7 p=0.0013 | F_int=3.34 p=0.063 | CVexp=9.9%
+       médias BC0: [2882.75, 2990.44, 3379.46]  BC12: [4303.73, 5360.89, 5661.93]
+AGBce  F_BC=33.1 p=0.0000 | F_L=13.7 p=0.0004 | F_int=0.99 p=0.395 | CVexp=13.1%
+       médias BC0: [34.67, 52.1, 56.53]  BC12: [55.87, 71.67, 68.0]
+H      F_BC=13.5 p=0.0023 | F_L=27.0 p=0.0000 | F_int=1.46 p=0.263 | CVexp=6.8%
+       médias BC0: [125.72, 163.39, 169.21]  BC12: [149.92, 182.18, 175.26]
+Correlações de Pearson (n=24):
+        LAI  SPAD   ExG   CCC    GY  AGBce     H
+LAI    1.00  0.23  0.41  0.83  0.54   0.69  0.55
+SPAD   0.23  1.00  0.43  0.73  0.59   0.60  0.48
+ExG    0.41  0.43  1.00  0.54  0.53   0.63  0.76
+CCC    0.83  0.73  0.54  1.00  0.73   0.82  0.66
+GY     0.54  0.59  0.53  0.73  1.00   0.68  0.56
+AGBce  0.69  0.60  0.63  0.82  0.68   1.00  0.85
+H      0.55  0.48  0.76  0.66  0.56   0.85  1.00
+ExG ~ SPAD + LAI (padronizado): beta_SPAD=0.36 (p=0.074), beta_LAI=0.33 (p=0.093), R2=0.29
+   com bloco: p_SPAD=0.220, p_LAI=0.115, R2=0.30
+ExG ~ LAI: R2=0.172, AIC=184.6
+ExG ~ SPAD: R2=0.187, AIC=184.1
+ExG ~ CCC: R2=0.289, AIC=180.9
+médias de tratamento r(ExG,LAI)=0.65 p=0.165
+médias de tratamento r(ExG,SPAD)=0.85 p=0.034
+médias de tratamento r(ExG,CCC)=0.78 p=0.069
+médias de tratamento r(GY,LAI)=0.83 p=0.039
+médias de tratamento r(GY,SPAD)=0.91 p=0.013
+médias de tratamento r(GY,ExG)=0.57 p=0.238
+médias de tratamento r(GY,CCC)=0.93 p=0.008
+GY~LAI: R2=0.30, AIC=402.2, p=0.0059
+GY~SPAD: R2=0.35, AIC=400.5, p=0.0025
+GY~ExG: R2=0.28, AIC=402.7, p=0.0077
+GY~CCC: R2=0.53, AIC=392.7, p=0.0001
+GY~LAI+SPAD: R2=0.52, AIC=394.9, p=0.0004
+SPAD: inclinação por % de dose de calcário = 0.0325 (p=0.0042)
+ExG: inclinação por % de dose de calcário = 0.2179 (p=0.0000)
+LAI: inclinação por % de dose de calcário = 0.0017 (p=0.1586)
+
+Versão A, correlação dos resíduos (dentro de tratamento):
+       LAI  SPAD   ExG   CCC     H    GY
+LAI   1.00 -0.22 -0.01  0.64  0.20 -0.08
+SPAD -0.22  1.00 -0.67  0.60 -0.09 -0.20
+ExG  -0.01 -0.67  1.00 -0.51  0.01  0.22
+CCC   0.64  0.60 -0.51  1.00  0.07 -0.20
+H     0.20 -0.09  0.01  0.07  1.00 -0.03
+GY   -0.08 -0.20  0.22 -0.20 -0.03  1.00
+
+Versão B, correlação dos resíduos (dentro de tratamento):
+       LAI  SPAD   ExG   CCC     H    GY
+LAI   1.00 -0.28 -0.03  0.68  0.23 -0.03
+SPAD -0.28  1.00 -0.67  0.51 -0.09 -0.20
+ExG  -0.03 -0.67  1.00 -0.51  0.01  0.22
+CCC   0.68  0.51 -0.51  1.00  0.13 -0.16
+H     0.23 -0.09  0.01  0.13  1.00 -0.03
+GY   -0.03 -0.20  0.22 -0.16 -0.03  1.00
