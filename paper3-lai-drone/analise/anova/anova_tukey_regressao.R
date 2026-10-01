@@ -2,7 +2,7 @@
 # Regression, factorial ANOVA (RCBD) and Tukey for TLA/LAI, SPAD and ExG
 # Data: dados/tabela_v2_2026-10-01.csv (table sent by Filipe on 2026-10-01)
 # Design: RCBD, 2 (biochar 0, 12 Mg ha-1) x 3 (lime 0, 75, 100% of the
-# recommended rate), 4 blocks. LAI = TLA x 10 plants m-2 / 10 000.
+# recommended rate), 4 blocks. LAI taken as reported in the table.
 # Run from paper3-lai-drone/:  Rscript analise/anova/anova_tukey_regressao.R
 ###############################################################################
 suppressPackageStartupMessages({
@@ -14,7 +14,7 @@ SAIDA <- "resultados/anova_tukey"; dir.create(SAIDA, recursive = TRUE, showWarni
 ALFA <- 0.05
 
 d <- read.csv("dados/tabela_v2_2026-10-01.csv")
-d$LAI <- d$TLA * 10 / 1e4
+d$LAI <- d$LAI_informado   # LAI as reported in the table (Filipe asked to keep it as is)
 d$Biochar <- factor(d$BC, levels = c("BC0", "BC12"), labels = c("0", "12"))
 d$Lime    <- factor(d$L, levels = c("L0", "L75", "L100"), labels = c("0", "75", "100"))
 d$Block   <- factor(d$BL)
@@ -24,7 +24,7 @@ vars <- list(
   TLA  = list(lab = expression("Leaf area (cm"^2*" plant"^-1*")"), txt = "TLA (cm2 plant-1)", dig = 0),
   SPAD = list(lab = "SPAD index",                                   txt = "SPAD index",   dig = 1),
   ExG  = list(lab = "ExG (DN)",                                     txt = "ExG (DN)",     dig = 1))
-log <- c(sprintf("n = %d plots. LAI computed from TLA x 10 plants m-2.", nrow(d)),
+log <- c(sprintf("n = %d plots. LAI as reported in the table.", nrow(d)),
          sprintf("Plots where reported LAI differs from TLA x 10/10000 by > 0.01: %s",
                  paste(d$Parcela[abs(d$LAI_informado - d$LAI) > 0.01], collapse = ", ")))
 

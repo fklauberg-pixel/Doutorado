@@ -22,9 +22,9 @@ def tabela(df):
                 for r in p.runs: r.font.size=Pt(8)
 def fp(p): return "< 0.001" if p<0.001 else f"{p:.3f}"
 doc.add_heading("Maize leaf area, SPAD and ExG under biochar and lime: ANOVA, Tukey and regression",1)
-par("Data: table sent by Filipe on 1 Oct 2026 (24 plots). LAI = TLA × 10 plants m⁻² / 10 000. "
+par("Data: table sent by Filipe on 1 Oct 2026 (24 plots). LAI as reported in the table. "
     "Note: this table differs from Livro2.xlsx/EXG.csv in plots 6, 19, 20 and 22 (TLA) and plot 19 (ExG); "
-    "in plots 19 and 20 the reported LAI does not match TLA × 10 (3.24 vs 3.20; 2.30 vs 2.33). "
+    "in plots 19 and 20 the reported LAI does not match TLA × 10 (3.24 vs 3.20; 2.30 vs 2.33) and was kept as reported. "
     "[VERIFICAR: confirm these values against the original CI-202 and QGIS records before submission.]", i=True, size=8)
 
 doc.add_heading("Statistical analysis (Methods text)",2)
@@ -48,14 +48,14 @@ T1.loc["Levene p"]=[f"{res.loc[c,'Levene_p']:.3f}" for c in T1.columns]
 T1.columns=["LAI (m² m⁻²)","SPAD index","ExG (DN)"]; T1=T1.reset_index().rename(columns={"index":"Source of variation"})
 T1.insert(1,"df",["3","1","2","2","","",""])
 tabela(T1)
-par("Values are F (p). Residual df = 15. TLA gives the same F and p as LAI (LAI is TLA × constant).",size=8)
+par("Values are F (p). Residual df = 15. TLA (F and p in Table_ANOVA.csv) differs slightly from LAI because LAI was kept as reported in two plots.",size=8)
 
 doc.add_heading("Table 2. Means ± standard deviation and Tukey groups",2)
 li=M[M.Variable.str.startswith(("LAI","TLA"))].copy()
 li["v"]=li.Mean_SD+" "+li.Tukey
 T2=li.pivot(index="Level",columns="Variable",values="v").reindex(["BC0 L0","BC0 L75","BC0 L100","BC12 L0","BC12 L75","BC12 L100"])
 T2.columns=["LAI (m² m⁻²)","TLA (cm² plant⁻¹)"]; tabela(T2.reset_index().rename(columns={"Level":"Treatment"}))
-par("Biochar × lime interaction significant (p = 0.001). Uppercase letters compare biochar rates within each lime rate; "
+par("Biochar × lime interaction significant (p < 0.001). Uppercase letters compare biochar rates within each lime rate; "
     "lowercase letters compare lime rates within each biochar rate (Tukey, p < 0.05). n = 4. BC, biochar (Mg ha⁻¹); L, lime (% of recommended rate).",size=8)
 se=M[~M.Variable.str.startswith(("LAI","TLA"))].copy(); se["v"]=se.Mean_SD+" "+se.Tukey
 T3=se.pivot(index=["Effect","Level"],columns="Variable",values="v").reindex([("Biochar","BC0"),("Biochar","BC12"),("Lime","L0"),("Lime","L75"),("Lime","L100")])
