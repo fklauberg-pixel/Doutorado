@@ -1,8 +1,9 @@
 ###############################################################################
 # Regression, factorial ANOVA (RCBD) and Tukey for TLA/LAI, SPAD and ExG
-# Data: dados/tabela_v2_2026-10-01.csv (table sent by Filipe on 2026-10-01)
+# Data: dados/preliminar_exg_tla.csv = Livro2.xlsx (TLA, SPAD, ExG), the dataset
+# Filipe confirmed as the valid one on 2026-10-03.
 # Design: RCBD, 2 (biochar 0, 12 Mg ha-1) x 3 (lime 0, 75, 100% of the
-# recommended rate), 4 blocks. LAI taken as reported in the table.
+# recommended rate), 4 blocks. LAI = TLA x 10 plants m-2 / 10 000.
 # Run from paper3-lai-drone/:  Rscript analise/anova/anova_tukey_regressao.R
 ###############################################################################
 suppressPackageStartupMessages({
@@ -13,43 +14,47 @@ invisible(Sys.setlocale("LC_ALL", "C.UTF-8"))
 SAIDA <- "resultados/anova_tukey"; dir.create(SAIDA, recursive = TRUE, showWarnings = FALSE)
 ALFA <- 0.05
 
-d <- read.csv("dados/tabela_v2_2026-10-01.csv")
-d$LAI <- d$LAI_informado   # LAI as reported in the table (Filipe asked to keep it as is)
-d$Biochar <- factor(d$BC, levels = c("BC0", "BC12"), labels = c("0", "12"))
-d$Lime    <- factor(d$L, levels = c("L0", "L75", "L100"), labels = c("0", "75", "100"))
-d$Block   <- factor(d$BL)
+d <- read.csv("dados/preliminar_exg_tla.csv")
+names(d)[names(d) == "TLA_cm2_planta"] <- "TLA"; names(d)[names(d) == "ExG_DN_QGIS"] <- "ExG"
+d$LAI <- d$TLA * 10 / 1e4
+d$Biochar <- factor(d$Biochar, levels = c("BC0", "BC12"))
+d$Lime    <- factor(d$Calcario, levels = c("L0", "L75", "L100"))
+d$Block   <- factor(d$Bloco)
+X_BC <- "Biochar"; X_L <- "Lime"   # axis titles; rates are defined in the captions
 
 vars <- list(
   LAI  = list(lab = expression("LAI (m"^2*" m"^-2*")"),            txt = "LAI (m2 m-2)",  dig = 2),
   TLA  = list(lab = expression("Leaf area (cm"^2*" plant"^-1*")"), txt = "TLA (cm2 plant-1)", dig = 0),
   SPAD = list(lab = "SPAD index",                                   txt = "SPAD index",   dig = 1),
   ExG  = list(lab = "ExG (DN)",                                     txt = "ExG (DN)",     dig = 1))
-log <- c(sprintf("n = %d plots. LAI as reported in the table.", nrow(d)),
-         sprintf("Plots where reported LAI differs from TLA x 10/10000 by > 0.01: %s",
-                 paste(d$Parcela[abs(d$LAI_informado - d$LAI) > 0.01], collapse = ", ")))
+log <- sprintf("n = %d plots (Livro2.xlsx). LAI = TLA x 10 plants m-2 / 10 000.", nrow(d))
 
 # ---- 1. Regressions -------------------------------------------------------
-pares <- list(c("LAI", "ExG"), c("LAI", "SPAD"), c("SPAD", "ExG"), c("TLA", "ExG"))
+num <- function(x) sub("\\.$", "", trimws(formatC(x, digits = 3, format = "fg", flag = "#")))
+sg  <- function(x) ifelse(x < 0, " − ", " + ")
+pares <- list(c("TLA", "ExG"), c("TLA", "SPAD"), c("SPAD", "ExG"), c("LAI", "ExG"), c("LAI", "SPAD"))
 reg <- do.call(rbind, lapply(pares, function(p) {
   f <- lm(reformulate(p[2], p[1]), d); s <- summary(f); ct <- cor.test(d[[p[2]]], d[[p[1]]])
   data.frame(Response = p[1], Predictor = p[2],
-             Equation = sprintf("y = %.4g %+.4g x", coef(f)[1], coef(f)[2]),
+             Equation = paste0("y = ", num(coef(f)[1]), sg(coef(f)[2]), num(abs(coef(f)[2])), "x"),
              r = ct$estimate, r_CI95 = sprintf("%.2f to %.2f", ct$conf.int[1], ct$conf.int[2]),
              R2 = s$r.squared, R2_adj = s$adj.r.squared, F = s$fstatistic[1],
              p = coef(s)[2, 4], RMSE = sigma(f), n = nrow(d))
 }))
-fm <- lm(LAI ~ ExG + SPAD, d); sm <- summary(fm)
-reg <- rbind(reg, data.frame(Response = "LAI", Predictor = "ExG + SPAD",
-  Equation = sprintf("y = %.4g %+.4g ExG %+.4g SPAD", coef(fm)[1], coef(fm)[2], coef(fm)[3]),
-  r = sqrt(sm$r.squared), r_CI95 = "(multiple R)", R2 = sm$r.squared, R2_adj = sm$adj.r.squared,
-  F = sm$fstatistic[1],
-  p = pf(sm$fstatistic[1], sm$fstatistic[2], sm$fstatistic[3], lower.tail = FALSE),
-  RMSE = sigma(fm), n = nrow(d)))
+for (yv in c("TLA", "LAI")) {
+  fm <- lm(reformulate(c("ExG", "SPAD"), yv), d); sm <- summary(fm)
+  reg <- rbind(reg, data.frame(Response = yv, Predictor = "ExG + SPAD",
+    Equation = paste0("y = ", num(coef(fm)[1]), sg(coef(fm)[2]), num(abs(coef(fm)[2])), " ExG", sg(coef(fm)[3]), num(abs(coef(fm)[3])), " SPAD"),
+    r = sqrt(sm$r.squared), r_CI95 = "(multiple R)", R2 = sm$r.squared, R2_adj = sm$adj.r.squared,
+    F = sm$fstatistic[1],
+    p = pf(sm$fstatistic[1], sm$fstatistic[2], sm$fstatistic[3], lower.tail = FALSE),
+    RMSE = sigma(fm), n = nrow(d)))
+}
 reg_out <- reg; reg_out[, c("r", "R2", "R2_adj", "F", "RMSE")] <- round(reg_out[, c("r", "R2", "R2_adj", "F", "RMSE")], 3)
 reg_out$p <- signif(reg_out$p, 3)
 write.csv(reg_out, file.path(SAIDA, "Table_regression.csv"), row.names = FALSE)
 log <- c(log, "", "REGRESSIONS", capture.output(print(reg_out, row.names = FALSE)),
-         sprintf("Partial p in LAI ~ ExG + SPAD: ExG p = %.4f; SPAD p = %.4f; VIF = %.2f",
+         sprintf("Partial p in TLA (or LAI) ~ ExG + SPAD: ExG p = %.4f; SPAD p = %.4f; VIF = %.2f",
                  coef(sm)[2, 4], coef(sm)[3, 4], vif(fm)[1]))
 
 tema <- theme_classic(base_size = 10, base_family = "sans") +
@@ -58,8 +63,8 @@ tema <- theme_classic(base_size = 10, base_family = "sans") +
 pt <- function(p) if (p < 0.001) "p < 0.001" else sprintf("p = %.3f", p)
 painel_reg <- function(y, x) {
   f <- lm(reformulate(x, y), d); s <- summary(f)
-  lab <- sprintf("y = %.3g %s %.3gx\nr = %.2f; R² = %.2f; %s", coef(f)[1],
-                 ifelse(coef(f)[2] < 0, "−", "+"), abs(coef(f)[2]),
+  lab <- sprintf("y = %s %s %sx\nr = %.2f; R² = %.2f; %s", num(coef(f)[1]),
+                 ifelse(coef(f)[2] < 0, "−", "+"), num(abs(coef(f)[2])),
                  cor(d[[x]], d[[y]]), s$r.squared, pt(coef(s)[2, 4]))
   ggplot(d, aes(.data[[x]], .data[[y]])) +
     geom_smooth(method = "lm", formula = y ~ x, colour = "black", fill = "grey80", linewidth = 0.5) +
@@ -69,11 +74,11 @@ painel_reg <- function(y, x) {
     labs(x = vars[[x]]$lab, y = vars[[y]]$lab, subtitle = lab) +
     tema + theme(plot.subtitle = element_text(size = 7.5))
 }
-g_reg <- (painel_reg("LAI", "ExG") | painel_reg("LAI", "SPAD") | painel_reg("SPAD", "ExG")) +
+g_reg <- (painel_reg("TLA", "ExG") | painel_reg("TLA", "SPAD") | painel_reg("SPAD", "ExG")) +
   plot_annotation(tag_levels = "a") & theme(legend.position = "bottom")
 g_reg <- g_reg + plot_layout(guides = "collect") &
-  guides(shape = guide_legend(title = expression("Biochar (Mg ha"^-1*")")),
-         fill = guide_legend(title = "Lime (% of rate)", override.aes = list(shape = 21)))
+  guides(shape = guide_legend(title = X_BC, order = 1),
+         fill = guide_legend(title = X_L, order = 2, override.aes = list(shape = 21)))
 ggsave(file.path(SAIDA, "Fig_regression.png"), g_reg, width = 180, height = 75, units = "mm", dpi = 600)
 ggsave(file.path(SAIDA, "Fig_regression.pdf"), g_reg, width = 180, height = 75, units = "mm")
 
@@ -112,7 +117,7 @@ for (v in names(vars)) {
     s$lab <- paste0(s$up, s$lo)
     s$Lime <- factor(s$Lime, levels = levels(d$Lime)); s <- s[order(s$Biochar, s$Lime), ]
     tab_medias[[v]] <- data.frame(Variable = vars[[v]]$txt, Effect = "Biochar x Lime",
-      Level = paste0("BC", s$Biochar, " L", s$Lime),
+      Level = paste(s$Biochar, s$Lime),
       Mean_SD = sprintf(paste0("%.", dig, "f ± %.", dig, "f"), s$m, s$sd),
       CI95 = sprintf(paste0("± %.", dig, "f"), s$ci95), Tukey = s$lab)
     s$ytxt <- s$m + s$sd + 0.04 * max(s$m + s$sd)
@@ -120,10 +125,10 @@ for (v in names(vars)) {
       geom_col(position = position_dodge(0.8), width = 0.7, colour = "black", linewidth = 0.3) +
       geom_errorbar(aes(ymin = m - sd, ymax = m + sd), position = position_dodge(0.8), width = 0.2, linewidth = 0.3) +
       geom_text(aes(y = ytxt, label = lab, group = Biochar), position = position_dodge(0.8), size = 2.8, vjust = 0) +
-      scale_fill_manual(values = c("white", "grey55"), name = expression("Biochar (Mg ha"^-1*")")) +
+      scale_fill_manual(values = c("white", "grey55"), name = X_BC) +
       scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
-      labs(x = "Lime (% of recommended rate)", y = vars[[v]]$lab,
-           subtitle = sprintf("B: %s; L: %s; B × L: %s", pt(av["Biochar", "Pr(>F)"]),
+      labs(x = X_L, y = vars[[v]]$lab,
+           subtitle = sprintf("Biochar: %s; Lime: %s; Biochar × Lime: %s", pt(av["Biochar", "Pr(>F)"]),
                               pt(av["Lime", "Pr(>F)"]), pt(p_int))) +
       tema + theme(legend.position = "top", plot.subtitle = element_text(size = 7.5))
   } else {
@@ -137,7 +142,7 @@ for (v in names(vars)) {
       p_fa <- av[fa, "Pr(>F)"]
       if (p_fa >= ALFA) s$.group <- ""    # no letters when the F test is not significant
       linhas[[fa]] <- data.frame(Variable = vars[[v]]$txt, Effect = fa,
-        Level = paste0(ifelse(fa == "Biochar", "BC", "L"), s[[fa]]),
+        Level = as.character(s[[fa]]),
         Mean_SD = sprintf(paste0("%.", dig, "f ± %.", dig, "f"), s$m, s$sd),
         CI95 = sprintf(paste0("± %.", dig, "f"), s$ci95),
         Tukey = ifelse(s$.group == "", "ns", s$.group))
@@ -147,8 +152,8 @@ for (v in names(vars)) {
         geom_errorbar(aes(ymin = m - sd, ymax = m + sd), width = 0.15, linewidth = 0.3) +
         geom_text(aes(y = ytxt, label = .group), size = 3, vjust = 0) +
         scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
-        labs(x = if (fa == "Biochar") expression("Biochar (Mg ha"^-1*")") else "Lime (% of recommended rate)",
-             y = vars[[v]]$lab, subtitle = sprintf("%s (F = %.2f)", pt(p_fa), av[fa, "F value"])) +
+        labs(x = if (fa == "Biochar") X_BC else X_L, y = vars[[v]]$lab,
+             subtitle = sprintf("%s: F = %.2f, %s\nBiochar × Lime: %s", fa, av[fa, "F value"], pt(p_fa), pt(p_int))) +
         tema + theme(plot.subtitle = element_text(size = 7.5))
     }
     tab_medias[[v]] <- do.call(rbind, linhas)
@@ -168,6 +173,9 @@ writeLines(log, file.path(SAIDA, "log_analysis.txt")); cat(log, sep = "\n")
 for (v in names(vars)) {
   ggsave(file.path(SAIDA, sprintf("Fig_bars_%s.png", v)), figs[[v]], width = 140, height = 75, units = "mm", dpi = 600)
 }
-g_all <- wrap_plots(figs[c("LAI", "SPAD", "ExG")], ncol = 1) + plot_annotation(tag_levels = "a")
-ggsave(file.path(SAIDA, "Fig_bars_LAI_SPAD_ExG.png"), g_all, width = 140, height = 210, units = "mm", dpi = 600)
-ggsave(file.path(SAIDA, "Fig_bars_LAI_SPAD_ExG.pdf"), g_all, width = 140, height = 210, units = "mm")
+for (k in list(c("TLA", "SPAD", "ExG"), c("LAI", "SPAD", "ExG"))) {
+  g_all <- wrap_plots(figs[k], ncol = 1) + plot_annotation(tag_levels = "a")
+  nm <- file.path(SAIDA, sprintf("Fig_bars_%s", paste(k, collapse = "_")))
+  ggsave(paste0(nm, ".png"), g_all, width = 140, height = 225, units = "mm", dpi = 600)
+  ggsave(paste0(nm, ".pdf"), g_all, width = 140, height = 225, units = "mm")
+}

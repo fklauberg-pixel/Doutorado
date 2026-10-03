@@ -1,98 +1,99 @@
-n = 24 plots. LAI as reported in the table.
-Plots where reported LAI differs from TLA x 10/10000 by > 0.01: 
+n = 24 plots (Livro2.xlsx). LAI = TLA x 10 plants m-2 / 10 000.
 
 REGRESSIONS
- Response  Predictor                            Equation     r       r_CI95
-      LAI        ExG                y = 1.658 +0.02275 x 0.750 0.50 to 0.89
-      LAI       SPAD                 y = 1.16 +0.05204 x 0.451 0.06 to 0.72
-     SPAD        ExG                 y = 26.92 +0.1126 x 0.429 0.03 to 0.71
-      TLA        ExG                   y = 1671 +22.52 x 0.753 0.50 to 0.89
-      LAI ExG + SPAD y = 1.167 +0.0207 ExG +0.01823 SPAD 0.764 (multiple R)
-    R2 R2_adj      F        p    RMSE  n
- 0.563  0.543 28.332 2.42e-05   0.234 24
- 0.203  0.167  5.605 2.71e-02   0.316 24
- 0.184  0.147  4.961 3.65e-02   2.771 24
- 0.567  0.547 28.763 2.20e-05 230.131 24
- 0.583  0.544 14.693 1.02e-04   0.234 24
-Partial p in LAI ~ ExG + SPAD: ExG p = 0.0003; SPAD p = 0.3231; VIF = 1.23
+ Response  Predictor                             Equation     r        r_CI95
+      TLA        ExG                     y = 2324 + 12.0x 0.414  0.01 to 0.70
+      TLA       SPAD                     y = 2104 + 26.1x 0.231 -0.19 to 0.58
+     SPAD        ExG                    y = 27.0 + 0.112x 0.432  0.04 to 0.71
+      LAI        ExG                   y = 2.32 + 0.0120x 0.414  0.01 to 0.70
+      LAI       SPAD                   y = 2.10 + 0.0261x 0.231 -0.19 to 0.58
+      TLA ExG + SPAD      y = 2128 + 11.2 ExG + 7.26 SPAD 0.418  (multiple R)
+      LAI ExG + SPAD y = 2.13 + 0.0112 ExG + 0.00726 SPAD 0.418  (multiple R)
+    R2 R2_adj     F      p    RMSE  n
+ 0.172  0.134 4.559 0.0441 316.158 24
+ 0.054  0.011 1.246 0.2760 337.939 24
+ 0.187  0.150 5.061 0.0348   2.777 24
+ 0.172  0.134 4.559 0.0441   0.316 24
+ 0.054  0.011 1.246 0.2760   0.338 24
+ 0.175  0.096 2.228 0.1330 322.940 24
+ 0.175  0.096 2.228 0.1330   0.323 24
+Partial p in TLA (or LAI) ~ ExG + SPAD: ExG p = 0.0933; SPAD p = 0.7726; VIF = 1.23
 
-ANOVA LAI (interaction p = 0.0008 -> interaction plot)
+ANOVA LAI (interaction p = 0.3328 -> main effects)
 Analysis of Variance Table
 
 Response: LAI
-             Df  Sum Sq Mean Sq F value    Pr(>F)    
-Block         3 0.14023 0.04674  2.1979 0.1306678    
-Biochar       1 1.13535 1.13535 53.3836 2.583e-06 ***
-Lime          2 0.65568 0.32784 15.4148 0.0002302 ***
-Biochar:Lime  2 0.51153 0.25576 12.0258 0.0007645 ***
-Residuals    15 0.31902 0.02127                      
+             Df  Sum Sq Mean Sq F value   Pr(>F)   
+Block         3 0.58586 0.19529  3.3701 0.046676 * 
+Biochar       1 0.89712 0.89712 15.4819 0.001324 **
+Lime          2 0.16522 0.08261  1.4256 0.271124   
+Biochar:Lime  2 0.13732 0.06866  1.1849 0.332836   
+Residuals    15 0.86920 0.05795                    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-CV = 5.1%; Shapiro-Wilk p = 0.989; Levene p = 0.996
+CV = 8.1%; Shapiro-Wilk p = 0.894; Levene p = 0.452
 
-ANOVA TLA (interaction p = 0.0010 -> interaction plot)
+ANOVA TLA (interaction p = 0.3328 -> main effects)
 Analysis of Variance Table
 
 Response: TLA
-             Df  Sum Sq Mean Sq F value    Pr(>F)    
-Block         3  132392   44131  2.0572 0.1490508    
-Biochar       1 1094461 1094461 51.0187 3.377e-06 ***
-Lime          2  657175  328587 15.3172 0.0002377 ***
-Biochar:Lime  2  482631  241316 11.2490 0.0010366 ** 
-Residuals    15  321782   21452                      
+             Df Sum Sq Mean Sq F value   Pr(>F)   
+Block         3 585857  195286  3.3701 0.046676 * 
+Biochar       1 897122  897122 15.4819 0.001324 **
+Lime          2 165221   82611  1.4256 0.271124   
+Biochar:Lime  2 137320   68660  1.1849 0.332836   
+Residuals    15 869199   57947                    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-CV = 5.1%; Shapiro-Wilk p = 0.986; Levene p = 0.995
+CV = 8.1%; Shapiro-Wilk p = 0.894; Levene p = 0.452
 
-ANOVA SPAD (interaction p = 0.8415 -> main effects)
+ANOVA SPAD (interaction p = 0.8398 -> main effects)
 Analysis of Variance Table
 
 Response: SPAD
              Df Sum Sq Mean Sq F value   Pr(>F)   
-Block         3 41.138  13.713  2.7667 0.078125 . 
-Biochar       1 44.010  44.010  8.8797 0.009348 **
-Lime          2 45.836  22.918  4.6240 0.027266 * 
-Biochar:Lime  2  1.731   0.865  0.1746 0.841468   
-Residuals    15 74.345   4.956                    
+Block         3 41.471  13.824  2.7879 0.076683 . 
+Biochar       1 44.827  44.827  9.0404 0.008851 **
+Lime          2 46.207  23.103  4.6594 0.026676 * 
+Biochar:Lime  2  1.752   0.876  0.1766 0.839809   
+Residuals    15 74.377   4.958                    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-CV = 6.8%; Shapiro-Wilk p = 0.713; Levene p = 0.110
+CV = 6.8%; Shapiro-Wilk p = 0.716; Levene p = 0.115
 
-ANOVA ExG (interaction p = 0.1098 -> main effects)
+ANOVA ExG (interaction p = 0.2397 -> main effects)
 Analysis of Variance Table
 
 Response: ExG
              Df  Sum Sq Mean Sq F value    Pr(>F)    
-Block         3  185.52   61.84  1.8283   0.18530    
-Biochar       1  320.76  320.76  9.4832   0.00763 ** 
-Lime          2 1815.28  907.64 26.8341 1.109e-05 ***
-Biochar:Lime  2  173.75   86.87  2.5684   0.10984    
-Residuals    15  507.36   33.82                      
+Block         3  192.25   64.08  1.8483   0.18177    
+Biochar       1  251.81  251.81  7.2627   0.01663 *  
+Lime          2 2065.07 1032.53 29.7800 5.983e-06 ***
+Biochar:Lime  2  109.10   54.55  1.5733   0.23973    
+Residuals    15  520.08   34.67                      
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-CV = 10.9%; Shapiro-Wilk p = 0.227; Levene p = 0.669
+CV = 11.1%; Shapiro-Wilk p = 0.462; Levene p = 0.698
 
 MEANS AND TUKEY
-          Variable         Effect     Level     Mean_SD   CI95 Tukey
-      LAI (m2 m-2) Biochar x Lime    BC0 L0 2.22 ± 0.15 ± 0.25    Bb
-      LAI (m2 m-2) Biochar x Lime   BC0 L75 2.88 ± 0.17 ± 0.27    Aa
-      LAI (m2 m-2) Biochar x Lime  BC0 L100 2.87 ± 0.15 ± 0.24    Ba
-      LAI (m2 m-2) Biochar x Lime   BC12 L0 3.06 ± 0.19 ± 0.31    Aa
-      LAI (m2 m-2) Biochar x Lime  BC12 L75 3.10 ± 0.14 ± 0.22    Aa
-      LAI (m2 m-2) Biochar x Lime BC12 L100 3.12 ± 0.15 ± 0.23    Aa
- TLA (cm2 plant-1) Biochar x Lime    BC0 L0  2228 ± 161  ± 257    Bb
- TLA (cm2 plant-1) Biochar x Lime   BC0 L75  2887 ± 168  ± 268    Aa
- TLA (cm2 plant-1) Biochar x Lime  BC0 L100  2872 ± 152  ± 242    Ba
- TLA (cm2 plant-1) Biochar x Lime   BC12 L0  3056 ± 181  ± 289    Aa
- TLA (cm2 plant-1) Biochar x Lime  BC12 L75  3097 ± 140  ± 223    Aa
- TLA (cm2 plant-1) Biochar x Lime BC12 L100  3115 ± 146  ± 233    Aa
-        SPAD index        Biochar       BC0  31.6 ± 2.4  ± 1.5     b
-        SPAD index        Biochar      BC12  34.3 ± 3.0  ± 1.9     a
-        SPAD index           Lime        L0  31.1 ± 2.7  ± 2.3     b
-        SPAD index           Lime       L75  33.3 ± 3.3  ± 2.8    ab
-        SPAD index           Lime      L100  34.4 ± 2.2  ± 1.8     a
-          ExG (DN)        Biochar       BC0 49.8 ± 13.2  ± 8.4     b
-          ExG (DN)        Biochar      BC12  57.1 ± 8.3  ± 5.3     a
-          ExG (DN)           Lime        L0  41.4 ± 8.2  ± 6.9     b
-          ExG (DN)           Lime       L75  57.5 ± 5.5  ± 4.6     a
-          ExG (DN)           Lime      L100  61.6 ± 8.5  ± 7.1     a
+          Variable  Effect Level     Mean_SD   CI95 Tukey
+      LAI (m2 m-2) Biochar   BC0 2.77 ± 0.30 ± 0.19     b
+      LAI (m2 m-2) Biochar  BC12 3.16 ± 0.27 ± 0.17     a
+      LAI (m2 m-2)    Lime    L0 2.85 ± 0.47 ± 0.39    ns
+      LAI (m2 m-2)    Lime   L75 3.05 ± 0.31 ± 0.26    ns
+      LAI (m2 m-2)    Lime  L100 2.99 ± 0.19 ± 0.16    ns
+ TLA (cm2 plant-1) Biochar   BC0  2771 ± 298  ± 190     b
+ TLA (cm2 plant-1) Biochar  BC12  3157 ± 266  ± 169     a
+ TLA (cm2 plant-1)    Lime    L0  2851 ± 472  ± 395    ns
+ TLA (cm2 plant-1)    Lime   L75  3047 ± 311  ± 260    ns
+ TLA (cm2 plant-1)    Lime  L100  2993 ± 190  ± 158    ns
+        SPAD index Biochar   BC0  31.6 ± 2.4  ± 1.5     b
+        SPAD index Biochar  BC12  34.3 ± 3.0  ± 1.9     a
+        SPAD index    Lime    L0  31.1 ± 2.7  ± 2.3     b
+        SPAD index    Lime   L75  33.3 ± 3.3  ± 2.8    ab
+        SPAD index    Lime  L100  34.4 ± 2.2  ± 1.8     a
+          ExG (DN) Biochar   BC0 49.8 ± 13.2  ± 8.4     b
+          ExG (DN) Biochar  BC12  56.3 ± 9.3  ± 5.9     a
+          ExG (DN)    Lime    L0  40.2 ± 7.2  ± 6.0     b
+          ExG (DN)    Lime   L75  57.5 ± 5.5  ± 4.6     a
+          ExG (DN)    Lime  L100  61.6 ± 8.5  ± 7.1     a
