@@ -80,7 +80,7 @@ B = B[["Response", "Predictor", "Equation", "r", "r_CI95", "R2", "R2_adj", "F", 
 B.columns = ["Response", "Predictor", "Equation", "r", "95% CI of r", "R²", "Adjusted R²", "F", "p", "RMSE", "R² quadratic"]
 tabela(B)
 par("TLA and LAI give the same r, R² and p (LAI = TLA × 10 plants m⁻²). The quadratic term was not significant in any model "
-    "(p ≥ 0.059). Grain yield in kg ha⁻¹; biomass with ear [VERIFICAR unit].", size=8)
+    "(p ≥ 0.059). Grain yield in kg ha⁻¹. Biomass with ear in Mg ha⁻¹ = mean g plant⁻¹ × 100 000 plants ha⁻¹ / 10⁶ (nominal stand) [VERIFICAR: growth stage at biomass sampling].", size=8)
 E = pd.read_csv(f"{R}/Table_regression_biomass_yield_extra.csv")
 E["p_model"] = E.p_model.apply(fp); E["Response"] = E.Response.map({"AGBce": "Biomass with ear", "GY": "Grain yield"})
 E["Model"] = E.Model.replace({"LAIxSPAD": "LAI × SPAD (single predictor)"})

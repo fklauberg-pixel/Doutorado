@@ -10,6 +10,7 @@ SAIDA <- "resultados/anova_tukey"; dir.create(SAIDA, recursive = TRUE, showWarni
 d <- merge(read.csv("dados/preliminar_exg_tla.csv"), read.csv("dados/livro2_biomassa_gy.csv"), by = "Parcela")
 names(d)[names(d) == "TLA_cm2_planta"] <- "TLA"; names(d)[names(d) == "ExG_DN_QGIS"] <- "ExG"
 d$LAI <- d$TLA * 10 / 1e4
+d$AGBce <- d$AGBce * 100000 / 1e6   # g plant-1 x 100 000 plants ha-1 -> Mg ha-1 (nominal stand)
 d$Biochar <- factor(d$Biochar, levels = c("BC0", "BC12"))
 d$Lime    <- factor(d$Calcario, levels = c("L0", "L75", "L100"))
 stopifnot(nrow(d) == 24)
@@ -19,7 +20,7 @@ lab <- list(
   TLA   = expression("Leaf area (cm"^2*" plant"^-1*")"),
   LAI   = expression("LAI (m"^2*" m"^-2*")"),
   ExG   = "ExG (DN)",
-  AGBce = "Biomass with ear",          # aboveground, with ear [VERIFICAR unit]
+  AGBce = expression("Biomass with ear (Mg ha"^-1*")"),
   GY    = expression("Grain yield (kg ha"^-1*")"))
 num <- function(x) sub("^-", "−", sub("\\.$", "", trimws(formatC(x, digits = 3, format = "fg", flag = "#"))))
 sg  <- function(x) ifelse(x < 0, " − ", " + ")
