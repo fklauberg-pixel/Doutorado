@@ -28,7 +28,7 @@ def tabela(df):
                 for r in p.runs: r.font.size = Pt(8)
 def fp(p): return "< 0.001" if p < 0.001 else f"{p:.3f}"
 
-doc.add_heading("Maize leaf area, LAI, SPAD and ExG under biochar and lime: ANOVA, Tukey and regression", 1)
+doc.add_heading("Maize leaf area, SPAD, ExG, biomass and yield under biochar and lime: ANOVA, Tukey and regression", 1)
 par("Data: Livro2.xlsx (24 plots; TLA from the CI-202, SPAD, and ExG extracted in QGIS), the dataset confirmed as valid "
     "on 3 Oct 2026. LAI = TLA × 10 plants m⁻² / 10 000.", i=True, size=8)
 
@@ -73,6 +73,22 @@ tabela(G2)
 par("RMSE in the units of the response (TLA, cm² plant⁻¹; LAI, m² m⁻²; SPAD, index units). In TLA (or LAI) ~ ExG + SPAD, "
     "neither predictor was significant (partial p: ExG = 0.093; SPAD = 0.773; VIF = 1.23).", size=8)
 
+doc.add_heading("Table 4. Linear regressions of SPAD, leaf area and ExG on biomass with ear and grain yield (n = 24)", 2)
+B = pd.read_csv(f"{R}/Table_regression_biomass_yield.csv")
+B["p"] = B.p.apply(fp); B["Response"] = B.Response.map({"AGBce": "Biomass with ear", "GY": "Grain yield"})
+B = B[["Response", "Predictor", "Equation", "r", "r_CI95", "R2", "R2_adj", "F", "p", "RMSE", "R2_quadratic"]]
+B.columns = ["Response", "Predictor", "Equation", "r", "95% CI of r", "R²", "Adjusted R²", "F", "p", "RMSE", "R² quadratic"]
+tabela(B)
+par("TLA and LAI give the same r, R² and p (LAI = TLA × 10 plants m⁻²). The quadratic term was not significant in any model "
+    "(p ≥ 0.059). Grain yield in kg ha⁻¹; biomass with ear [VERIFICAR unit].", size=8)
+E = pd.read_csv(f"{R}/Table_regression_biomass_yield_extra.csv")
+E["p_model"] = E.p_model.apply(fp); E["Response"] = E.Response.map({"AGBce": "Biomass with ear", "GY": "Grain yield"})
+E["Model"] = E.Model.replace({"LAIxSPAD": "LAI × SPAD (single predictor)"})
+E.columns = ["Response", "Predictors", "R²", "Adjusted R²", "p", "AIC"]
+tabela(E)
+par("Combined models. The product LAI × SPAD (a proxy of canopy chlorophyll content) explains biomass and yield better "
+    "than any single variable.", size=8)
+
 doc.add_heading("Figures", 2)
 doc.add_picture(f"{R}/Fig_bars_TLA_SPAD_ExG.png", width=Mm(140))
 par("Fig. 1 Main effects of biochar and lime on (a, b) leaf area per plant (TLA), (c, d) SPAD index and (e, f) excess green "
@@ -83,6 +99,10 @@ doc.add_picture(f"{R}/Fig_regression.png", width=Mm(170))
 par("Fig. 2 Relationships between (a) leaf area per plant (TLA) and ExG, (b) TLA and SPAD index and (c) SPAD index and ExG "
     "in maize plots (n = 24). Lines are ordinary least-squares fits with 95% confidence bands. Symbol shape, biochar rate; "
     "fill, lime rate. " + TRAT, size=8)
+doc.add_picture(f"{R}/Fig_regression_biomass_yield.png", width=Mm(170))
+par("Fig. 3 Relationships of SPAD index, leaf area per plant (TLA) and ExG with (a–c) aboveground biomass with ear and "
+    "(d–f) grain yield of maize (n = 24). Lines are ordinary least-squares fits with 95% confidence bands. Symbol shape, "
+    "biochar rate; fill, lime rate. " + TRAT, size=8)
 doc.add_picture(f"{R}/Fig_bars_LAI_SPAD_ExG.png", width=Mm(140))
 par("Fig. S1 Same as Fig. 1 with leaf area index (LAI = TLA × 10 plants m⁻²) in panels a and b.", size=8)
 
